@@ -1,6 +1,6 @@
 ## Summary
 
-[Change!] Describe your feature, problems you had, notes, improvements and others.
+Created model and migrations for the user's data.
 
 ## Known Issues
 
@@ -8,4 +8,4 @@
 
 ## Trello Card
 
-[Change!] Link to the associated Trello card.
+https://trello.com/c/v1q1gq49
