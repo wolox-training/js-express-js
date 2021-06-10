@@ -1,17 +1,18 @@
 const axios = require('axios').default;
 
 const logger = require('../logger');
-const config = require('../../config').common.apiGeekJoke;
+const { externalApiError } = require('../errors');
+const config = require('../../config');
 
 exports.getRandomJoke = async () => {
   try {
     const response = await axios({
-      url: `${config.url}/api?format=json`,
+      url: `${config.common.apiGeekJoke}/api?format=json`,
       method: 'GET'
     });
     return response.data;
   } catch (error) {
-    logger.error(error.message);
-    return error.message;
+    logger.error('Error getting random joke');
+    return externalApiError('Error getting random joke');
   }
 };
