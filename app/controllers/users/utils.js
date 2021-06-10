@@ -1,4 +1,3 @@
-const logger = require('pino')();
 const bcrypt = require('bcryptjs');
 
 exports.encryptar = password =>
@@ -7,18 +6,15 @@ exports.encryptar = password =>
       if (errGenSalt) reject(errGenSalt);
       bcrypt.hash(password, salt, (errHash, hash) => {
         if (errHash) reject(errHash);
-        logger.info(hash);
         resolve(hash);
       });
     });
   });
 
-exports.verifyEmail = email => {
-  const domainWolox = `${email} Hello`;
-  return domainWolox;
-};
-
-exports.verifyPassword = email => {
-  const domainWolox = `${email} Hello`;
-  return domainWolox;
-};
+exports.comparePassword = (password, hashPassword) =>
+  new Promise((resolve, reject) => {
+    bcrypt.compare(password, hashPassword, (err, res) => {
+      if (err) reject(err);
+      resolve(res);
+    });
+  });
