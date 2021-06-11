@@ -1,8 +1,8 @@
 const axios = require('axios').default;
 
 const logger = require('../logger');
-const { externalApiError } = require('../errors');
 const config = require('../../config');
+const { externalApiError } = require('../errors');
 
 exports.getRandomJoke = async () => {
   try {
@@ -13,6 +13,6 @@ exports.getRandomJoke = async () => {
     return response.data;
   } catch (error) {
     logger.error('Error getting random joke');
-    return externalApiError('Error getting random joke');
+    throw externalApiError('Error getting random joke');
   }
 };
