@@ -45,7 +45,8 @@ const config = {
       packageVersion: process.env.PACKAGE_VERSION || 'X-Package-Version',
       nodeVersion: process.env.NODE_VERSION || 'X-Node-Version'
     },
-    apiGeekJoke: process.env.API_GEEK_JOKE
+    apiGeekJoke: process.env.API_GEEK_JOKE,
+    roundsBcrypt: process.env.ROUNDS_BCRYPT
   }
 };
 

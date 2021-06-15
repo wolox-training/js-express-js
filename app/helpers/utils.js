@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs');
+const config = require('../../config');
 
 exports.encryptar = password =>
   new Promise((resolve, reject) => {
-    bcrypt.genSalt(10, (errGenSalt, salt) => {
+    bcrypt.genSalt(parseInt(config.common.roundsBcrypt), (errGenSalt, salt) => {
       if (errGenSalt) reject(errGenSalt);
       bcrypt.hash(password, salt, (errHash, hash) => {
         if (errHash) reject(errHash);

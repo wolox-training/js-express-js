@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING,
         require: true
       },
-      last_name: {
+      lastName: {
         type: Sequelize.STRING,
         require: true
       },
