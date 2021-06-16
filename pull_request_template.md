@@ -1,8 +1,11 @@
 ## Summary
-· The service was created to get one random data from the api (https://github.com/sameerkumar18/geek-joke-api).
+
+[Change!] Describe your feature, problems you had, notes, improvements and others.
 
 ## Known Issues
-· The route /weet (post) only return the random data from the api geek-joke. 
-Doesn't create any records in the database.
+
+[Change!] List any known issue of the feacture you are implementing.
+
 ## Trello Card
-https://trello.com/c/9XfTnJrf.
+
+[Change!] Link to the associated Trello card.

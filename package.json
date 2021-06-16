@@ -1,5 +1,5 @@
 {
-  "name": "WTraining",
+  "name": "wtraining",
   "version": "0.1.0",
   "description": "WTraining",
   "engines": {
@@ -70,6 +70,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "express-validator": "^6.12.0",
     "express-wolox-logger": "^2.0.0",
     "factory-girl": "^5.0.4",
     "jwt-simple": "^0.5.1",
