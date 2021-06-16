@@ -4,9 +4,6 @@ const config = require('../../config');
 const logger = require('../logger');
 const { defaultError } = require('../errors');
 
-exports.regDomainWolox = /^(([^<>()[\]\\,;:\s@”]+((@wolox)+\.(co))))$/;
-exports.regPasswordAlphaNumeric = /^(?=.*\d)(?=.*\D)/;
-
 exports.encryptar = password => {
   try {
     const salt = bcrypt.genSaltSync(parseInt(config.common.roundsBcrypt));
