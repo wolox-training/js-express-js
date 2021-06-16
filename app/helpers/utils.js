@@ -1,21 +1,16 @@
 const bcrypt = require('bcryptjs');
+
 const config = require('../../config');
+const logger = require('../logger');
+const { defaultError } = require('../errors');
 
-exports.encryptar = password =>
-  new Promise((resolve, reject) => {
-    bcrypt.genSalt(parseInt(config.common.roundsBcrypt), (errGenSalt, salt) => {
-      if (errGenSalt) reject(errGenSalt);
-      bcrypt.hash(password, salt, (errHash, hash) => {
-        if (errHash) reject(errHash);
-        resolve(hash);
-      });
-    });
-  });
-
-exports.comparePassword = (password, hashPassword) =>
-  new Promise((resolve, reject) => {
-    bcrypt.compare(password, hashPassword, (err, res) => {
-      if (err) reject(err);
-      resolve(res);
-    });
-  });
+exports.encryptar = password => {
+  try {
+    const salt = bcrypt.genSaltSync(parseInt(config.common.roundsBcrypt));
+    const newPassword = bcrypt.hashSync(password, salt);
+    return newPassword;
+  } catch (err) {
+    logger.error(err);
+    throw defaultError(err);
+  }
+};

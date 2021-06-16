@@ -7,32 +7,28 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
-        defaultValue: sequelize.UUIDV1,
-        field: 'id'
+        defaultValue: sequelize.UUIDV1
       },
       name: {
-        type: DataTypes.STRING,
-        field: 'name'
+        type: DataTypes.STRING
       },
       lastName: {
         type: DataTypes.STRING,
         field: 'last_name'
       },
       email: {
-        type: DataTypes.STRING,
-        field: 'email'
+        type: DataTypes.STRING
       },
       password: {
-        type: DataTypes.STRING,
-        field: 'password'
+        type: DataTypes.STRING
       },
       createdAt: {
         type: DataTypes.DATE,
-        field: 'createdAt'
+        field: 'created_at'
       },
       updatedAt: {
         type: DataTypes.DATE,
-        field: 'updatedAt'
+        field: 'updated_at'
       }
     },
     {
