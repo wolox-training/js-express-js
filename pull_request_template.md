@@ -1,14 +1,11 @@
 ## Summary
 
-Created model and migrations for the user's data.
-Created controller for to save user's data.
-User information is validated correctly before to save data.
+[Change!] Describe your feature, problems you had, notes, improvements and others.
 
 ## Known Issues
 
-None
+[Change!] List any known issue of the feacture you are implementing.
 
 ## Trello Card
 
-https://trello.com/c/v1q1gq49
-https://trello.com/c/r3T3JeHx
+[Change!] Link to the associated Trello card.
