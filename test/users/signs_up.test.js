@@ -1,3 +1,4 @@
+const faker = require('faker');
 const supertest = require('supertest');
 
 const app = require('../../app');
@@ -7,13 +8,12 @@ const logger = require('../../app/logger');
 describe('Users - Sign Up', () => {
   beforeEach(() => {
     const data = {
-      name: 'Juan',
-      last_name: 'Sanchez',
+      name: faker.name.findName(),
+      last_name: faker.name.lastName(),
       email: 'first.user@wolox.co',
-      password: 'Wolox2020'
+      password: faker.internet.password()
     };
-    db.user
-      .create(data)
+    db.User.create(data)
       .then()
       .catch(err => {
         logger.error(err.errors);
@@ -22,10 +22,10 @@ describe('Users - Sign Up', () => {
 
   it('Response status 200 - User created correctly', async done => {
     const data = {
-      name: 'Juan',
-      last_name: 'Sanchez',
-      email: 'juan.sanchez@wolox.co',
-      password: 'Wolox2020'
+      name: faker.name.findName(),
+      last_name: faker.name.lastName(),
+      email: 'new.user@wolox.co',
+      password: faker.internet.password()
     };
     const response = await supertest(app)
       .post('/endpoint/post/users')
@@ -37,9 +37,9 @@ describe('Users - Sign Up', () => {
 
   it('Response status 400 - The password is incorrect ', async done => {
     const data = {
-      name: 'Juan',
-      last_name: 'Sanchez',
-      email: 'juan.sanchez@wolox.co',
+      name: faker.name.findName(),
+      last_name: faker.name.lastName(),
+      email: 'first.user@wolox.co',
       password: 'password'
     };
     const response = await supertest(app)
@@ -52,10 +52,10 @@ describe('Users - Sign Up', () => {
 
   it('Response status 400 - Email in use ', async done => {
     const data = {
-      name: 'Juan',
-      last_name: 'Sanchez',
+      name: faker.name.findName(),
+      last_name: faker.name.lastName(),
       email: 'first.user@wolox.co',
-      password: 'Wolox2020'
+      password: faker.internet.password()
     };
     const response = await supertest(app)
       .post('/endpoint/post/users')
@@ -66,10 +66,7 @@ describe('Users - Sign Up', () => {
   });
 
   it('Response status 400 -  The params are incomplete', async done => {
-    const data = {
-      email: 'juan.sanchez@wolox.co',
-      password: 'Wolox2020'
-    };
+    const data = {};
     const response = await supertest(app)
       .post('/endpoint/post/users')
       .send(data)
