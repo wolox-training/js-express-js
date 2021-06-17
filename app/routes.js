@@ -9,7 +9,7 @@ const { createUser } = require('./controllers/users');
 
 exports.init = app => {
   app.get('/health', healthCheck);
-  app.post('/endpoint/post/users', [schemaSignUp, validationSchema], createUser);
+  app.post('/users', [schemaSignUp, validationSchema], createUser);
   // app.get('/endpoint/get/path', [], controller.methodGET);
   // app.put('/endpoint/put/path', [], controller.methodPUT);
   // app.post('/endpoint/post/path', [], controller.methodPOST);
