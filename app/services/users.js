@@ -1,10 +1,10 @@
 const db = require('../models/index');
 
 const logger = require('../logger');
-const { databaseError } = require('../errors');
+const { databaseError, badRequest_Error } = require('../errors');
 
 const { signUp } = require('../serializers/users');
-const { encryptar } = require('../helpers/utils');
+const { encryptar, comparePassword } = require('../helpers/utils');
 
 exports.saveUser = async data => {
   try {
@@ -14,5 +14,22 @@ exports.saveUser = async data => {
   } catch (err) {
     logger.error(databaseError(err.errors));
     throw databaseError(err.errors);
+  }
+};
+
+exports.verifyCredentials = async (email, password) => {
+  try {
+    const user = await db.User.findOne({ where: { email } });
+    if (user) {
+      if (comparePassword(password, user.password)) {
+        return signUp(user);
+      }
+      throw badRequest_Error('Wrong credentials');
+    } else {
+      throw badRequest_Error('Wrong credentials');
+    }
+  } catch (err) {
+    logger.error(err);
+    throw err;
   }
 };
