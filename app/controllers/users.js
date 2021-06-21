@@ -25,7 +25,8 @@ exports.signInUser = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    const users = await getAllUsers();
+    const { size, page } = req.query;
+    const users = await getAllUsers(size, page);
     res.status(200).send(users);
   } catch (err) {
     res.status(400).send(err);

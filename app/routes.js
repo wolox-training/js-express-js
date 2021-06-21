@@ -12,7 +12,7 @@ const { createUser, signInUser, getUsers } = require('./controllers/users');
 
 exports.init = app => {
   app.get('/health', healthCheck);
-  app.get('/users', [verifyToken], getUsers);
+  app.get('/users/', [verifyToken], getUsers);
   app.post('/users', [schemaSignUp, validationSchema], createUser);
   app.post('/users/sessions', [schemaSignIn, validationSchemaSingIn], signInUser);
   // app.get('/endpoint/get/path', [], controller.methodGET);

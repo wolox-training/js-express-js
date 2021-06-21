@@ -17,9 +17,12 @@ exports.saveUser = async data => {
   }
 };
 
-exports.getAllUsers = async () => {
+exports.getAllUsers = async (size = 10, page = 0) => {
   try {
-    const listUsers = await db.User.findAll();
+    const listUsers = await db.User.findAll({
+      limit: size,
+      offset: page * size
+    });
     return getUsers(listUsers);
   } catch (err) {
     logger.error(databaseError(err.errors));

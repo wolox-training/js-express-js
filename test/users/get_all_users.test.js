@@ -24,7 +24,7 @@ describe('Users - get all', () => {
         .send(userData())
         .set('Accept', 'application/json');
       const responseUsers = await supertest(app)
-        .get('/users/')
+        .get('/users/?size=5&page=0')
         .set('Accept', 'application/json')
         .auth(responseLogin.body.token, { type: 'bearer' });
       expect(responseUsers.status).toBe(200);
