@@ -6,3 +6,12 @@ exports.signUp = data => ({
     email: data.email
   }
 });
+
+exports.getUsers = data => ({
+  users: data.map(user => ({
+    id: user.id,
+    name: user.name,
+    last_name: user.lastName,
+    email: user.email
+  }))
+});
