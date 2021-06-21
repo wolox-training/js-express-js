@@ -2,7 +2,7 @@ const supertest = require('supertest');
 
 const app = require('../../app');
 const db = require('../../app/models/index');
-const { userDataCorrectly, wrongPassword } = require('../factory/users');
+const { userData, wrongPassword } = require('../factory/users');
 
 const logger = require('../../app/logger');
 
@@ -10,7 +10,7 @@ describe('Users - Sign Up', () => {
   it('Response status 200 - User created correctly', async done => {
     const response = await supertest(app)
       .post('/users')
-      .send(userDataCorrectly())
+      .send(userData())
       .set('Accept', 'application/json');
     expect(response.status).toBe(200);
     done();
@@ -26,11 +26,11 @@ describe('Users - Sign Up', () => {
   });
 
   it('Response status 400 - Email in use ', done => {
-    db.User.create(userDataCorrectly())
+    db.User.create(userData())
       .then(async () => {
         const response = await supertest(app)
           .post('/users')
-          .send(userDataCorrectly())
+          .send(userData())
           .set('Accept', 'application/json');
         expect(response.status).toBe(400);
         done();
