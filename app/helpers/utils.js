@@ -14,3 +14,12 @@ exports.encryptar = password => {
     throw defaultError(err);
   }
 };
+
+exports.comparePassword = (password, hashPassword) => {
+  try {
+    return bcrypt.compareSync(password, hashPassword);
+  } catch (err) {
+    logger.error(err);
+    throw defaultError(err);
+  }
+};

@@ -1,10 +1,10 @@
 const db = require('../models/index');
 
 const logger = require('../logger');
-const { databaseError } = require('../errors');
+const { databaseError, badRequest_Error } = require('../errors');
 
-const { signUp, getUsers } = require('../serializers/users');
-const { encryptar } = require('../helpers/utils');
+const { signUp, dataComplete, getUsers } = require('../serializers/users');
+const { encryptar, comparePassword } = require('../helpers/utils');
 
 exports.saveUser = async data => {
   try {
@@ -24,5 +24,32 @@ exports.getAllUsers = async () => {
   } catch (err) {
     logger.error(databaseError(err.errors));
     throw databaseError(err.errors);
+  }
+};
+
+exports.getUserByEmail = async email => {
+  try {
+    const user = await db.User.findOne({ where: { email } });
+    return user ? dataComplete(user) : user;
+  } catch (err) {
+    logger.error(databaseError(err.errors));
+    throw databaseError(err.errors);
+  }
+};
+
+exports.verifyCredentials = async credentials => {
+  try {
+    const userData = await this.getUserByEmail(credentials.email);
+    if (userData) {
+      if (comparePassword(credentials.password, userData.user.password)) {
+        return userData;
+      }
+      throw badRequest_Error('Wrong credentials');
+    } else {
+      throw badRequest_Error('Wrong credentials');
+    }
+  } catch (err) {
+    logger.error(err);
+    throw err;
   }
 };

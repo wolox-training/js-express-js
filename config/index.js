@@ -46,7 +46,8 @@ const config = {
       nodeVersion: process.env.NODE_VERSION || 'X-Node-Version'
     },
     apiGeekJoke: process.env.API_GEEK_JOKE,
-    roundsBcrypt: process.env.ROUNDS_BCRYPT
+    roundsBcrypt: process.env.ROUNDS_BCRYPT,
+    seedToken: process.env.SEED
   }
 };
 
