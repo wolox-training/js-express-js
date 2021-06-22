@@ -1,6 +1,6 @@
 const { signUp, signIn } = require('../mappers/users');
 
-const { saveUser, verifyCredentials } = require('../services/users');
+const { saveUser, verifyCredentials, getAllUsers } = require('../services/users');
 const { createToken } = require('../helpers/jwt');
 
 exports.createUser = async (req, res) => {
@@ -18,6 +18,16 @@ exports.signInUser = async (req, res) => {
     const dataUser = await verifyCredentials(signIn(req.body));
     const token = createToken(dataUser.user);
     res.status(200).send({ token });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+};
+
+exports.getUsers = async (req, res) => {
+  try {
+    const { size, page } = req.query;
+    const users = await getAllUsers(size, page);
+    res.status(200).send(users);
   } catch (err) {
     res.status(400).send(err);
   }

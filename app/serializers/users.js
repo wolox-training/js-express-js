@@ -7,6 +7,15 @@ exports.signUp = data => ({
   }
 });
 
+exports.getUsers = data => ({
+  users: data.map(user => ({
+    id: user.id,
+    name: user.name,
+    last_name: user.lastName,
+    email: user.email
+  }))
+});
+
 exports.dataComplete = data => ({
   user: {
     id: data.id,

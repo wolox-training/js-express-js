@@ -5,7 +5,7 @@ const { expiresIn } = require('../constants');
 const { dataJWT } = require('../serializers/users');
 
 const logger = require('../logger');
-const { defaultError } = require('../errors');
+const { defaultError, unauthorizedError } = require('../errors');
 
 exports.createToken = data => {
   try {
@@ -14,5 +14,15 @@ exports.createToken = data => {
   } catch (err) {
     logger.error(err);
     throw defaultError(err);
+  }
+};
+
+exports.decodeToken = token => {
+  try {
+    const decoded = jwt.verify(token, config.common.seedToken);
+    return dataJWT(decoded);
+  } catch (err) {
+    logger.error(err);
+    throw unauthorizedError(err.message);
   }
 };
