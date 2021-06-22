@@ -1,7 +1,15 @@
 const { signUp, signIn } = require('../mappers/users');
 const { dataBasic, listUsers } = require('../serializers/users');
 
-const { saveUser, verifyCredentials, getAllUsers, saveUserAdmin } = require('../services/users');
+const { roles } = require('../constants');
+
+const {
+  saveUser,
+  verifyCredentials,
+  getUserByEmail,
+  getAllUsers,
+  updateUserByEmail
+} = require('../services/users');
 const { createToken } = require('../helpers/jwt');
 
 exports.createUser = async (req, res) => {
@@ -15,8 +23,16 @@ exports.createUser = async (req, res) => {
 
 exports.createUserAdmin = async (req, res) => {
   try {
-    const dataUser = await saveUserAdmin(signUp(req.body));
-    res.status(200).send(dataBasic(dataUser));
+    let response = {};
+    const dataNewUser = signUp(req.body);
+    const user = await getUserByEmail(dataNewUser.email);
+    if (user) {
+      response = await updateUserByEmail(user.email, { role: roles.ADMIN });
+    } else {
+      dataNewUser.role = roles.ADMIN;
+      response = await saveUser(dataNewUser);
+    }
+    res.status(200).send(dataBasic(response));
   } catch (err) {
     res.status(400).send(err);
   }

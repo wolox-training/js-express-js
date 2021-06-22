@@ -2,7 +2,6 @@ const db = require('../models/index');
 
 const logger = require('../logger');
 const { databaseError, badRequest_Error } = require('../errors');
-const { roleAdmin } = require('../constants');
 
 const { pagination } = require('../serializers/users');
 const { encryptar, comparePassword } = require('../helpers/utils');
@@ -12,28 +11,6 @@ exports.saveUser = async data => {
     data.password = encryptar(data.password);
     const newUser = await db.User.create(data);
     return newUser;
-  } catch (err) {
-    logger.error(databaseError(err.errors));
-    throw databaseError(err.errors);
-  }
-};
-
-exports.saveUserAdmin = async data => {
-  try {
-    let response = {};
-    const dataUser = await this.getUserByEmail(data.email);
-    if (dataUser) {
-      await this.updateUserByEmail(dataUser.email, { role: roleAdmin });
-      response = dataUser;
-      response.role = roleAdmin;
-    } else {
-      // eslint-disable-next-line require-atomic-updates
-      data.role = roleAdmin;
-      // eslint-disable-next-line require-atomic-updates
-      data.password = encryptar(data.password);
-      response = await this.saveUser(data);
-    }
-    return response;
   } catch (err) {
     logger.error(databaseError(err.errors));
     throw databaseError(err.errors);
@@ -65,9 +42,11 @@ exports.getAllUsers = async (size = 10, page = 0) => {
 
 exports.updateUserByEmail = async (email, data) => {
   try {
-    await db.User.update(data, {
-      where: { email }
+    const dataUpdated = await db.User.update(data, {
+      where: { email },
+      returning: true
     });
+    return dataUpdated[1][0];
   } catch (err) {
     logger.error(databaseError(err.errors));
     throw databaseError(err.errors);
