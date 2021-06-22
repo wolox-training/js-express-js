@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING
       },
+      role: {
+        type: DataTypes.INTEGER
+      },
       createdAt: {
         type: DataTypes.DATE,
         field: 'created_at'

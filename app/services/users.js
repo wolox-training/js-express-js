@@ -2,15 +2,16 @@ const db = require('../models/index');
 
 const logger = require('../logger');
 const { databaseError, badRequest_Error } = require('../errors');
+const { roleAdmin } = require('../constants');
 
-const { signUp, dataComplete } = require('../serializers/users');
+const { dataComplete } = require('../serializers/users');
 const { encryptar, comparePassword } = require('../helpers/utils');
 
 exports.saveUser = async data => {
   try {
     data.password = encryptar(data.password);
     const newUser = await db.User.create(data);
-    return signUp(newUser);
+    return dataComplete(newUser);
   } catch (err) {
     logger.error(databaseError(err.errors));
     throw databaseError(err.errors);
@@ -41,5 +42,38 @@ exports.verifyCredentials = async credentials => {
   } catch (err) {
     logger.error(err);
     throw err;
+  }
+};
+
+exports.updateUserByEmail = async (email, data) => {
+  try {
+    await db.User.update(data, {
+      where: { email }
+    });
+  } catch (err) {
+    logger.error(databaseError(err.errors));
+    throw databaseError(err.errors);
+  }
+};
+
+exports.createUserAdmin = async data => {
+  try {
+    let response = {};
+    const dataUser = await this.getUserByEmail(data.email);
+    if (dataUser) {
+      await this.updateUserByEmail(dataUser.user.email, { role: roleAdmin });
+      response = dataUser;
+      response.user.role = roleAdmin;
+    } else {
+      // eslint-disable-next-line require-atomic-updates
+      data.role = roleAdmin;
+      // eslint-disable-next-line require-atomic-updates
+      data.password = encryptar(data.password);
+      response = await this.saveUser(data);
+    }
+    return response;
+  } catch (err) {
+    logger.error(databaseError(err.errors));
+    throw databaseError(err.errors);
   }
 };

@@ -7,12 +7,13 @@ const { validationSchema } = require('./middlewares/verify_signs_up');
 const { validationSchemaSingIn } = require('./middlewares/verify_signs_in');
 
 const { healthCheck } = require('./controllers/healthCheck');
-const { createUser, signInUser } = require('./controllers/users');
+const { createUser, signInUser, createUserAdmin } = require('./controllers/users');
 
 exports.init = app => {
   app.get('/health', healthCheck);
   app.post('/users', [schemaSignUp, validationSchema], createUser);
   app.post('/users/sessions', [schemaSignIn, validationSchemaSingIn], signInUser);
+  app.post('/admin/users', [schemaSignIn, validationSchemaSingIn], createUserAdmin);
   // app.get('/endpoint/get/path', [], controller.methodGET);
   // app.put('/endpoint/put/path', [], controller.methodPUT);
   // app.post('/endpoint/post/path', [], controller.methodPOST);
