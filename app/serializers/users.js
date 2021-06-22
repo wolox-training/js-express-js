@@ -8,7 +8,7 @@ exports.dataBasic = data => ({
   }
 });
 
-exports.getUsers = data => ({
+exports.listUsers = data => ({
   users: data.map(user => ({
     id: user.id,
     name: user.name,
@@ -34,3 +34,5 @@ exports.dataJWT = data => ({
   last_name: data.last_name,
   role: data.role
 });
+
+exports.pagination = (count, rows) => ({ count, rows });

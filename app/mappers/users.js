@@ -9,3 +9,10 @@ exports.signIn = data => ({
   email: data.email,
   password: data.password
 });
+
+exports.dataJWT = data => ({
+  id: data.id,
+  name: data.name,
+  lastName: data.last_name,
+  role: data.role
+});
