@@ -4,14 +4,14 @@ const logger = require('../logger');
 const { databaseError, badRequest_Error } = require('../errors');
 const { roleAdmin } = require('../constants');
 
-const { dataComplete, listUsers, pagination } = require('../serializers/users');
+const { pagination } = require('../serializers/users');
 const { encryptar, comparePassword } = require('../helpers/utils');
 
 exports.saveUser = async data => {
   try {
     data.password = encryptar(data.password);
     const newUser = await db.User.create(data);
-    return dataComplete(newUser);
+    return newUser;
   } catch (err) {
     logger.error(databaseError(err.errors));
     throw databaseError(err.errors);
@@ -23,9 +23,9 @@ exports.saveUserAdmin = async data => {
     let response = {};
     const dataUser = await this.getUserByEmail(data.email);
     if (dataUser) {
-      await this.updateUserByEmail(dataUser.user.email, { role: roleAdmin });
+      await this.updateUserByEmail(dataUser.email, { role: roleAdmin });
       response = dataUser;
-      response.user.role = roleAdmin;
+      response.role = roleAdmin;
     } else {
       // eslint-disable-next-line require-atomic-updates
       data.role = roleAdmin;
@@ -43,7 +43,7 @@ exports.saveUserAdmin = async data => {
 exports.getUserByEmail = async email => {
   try {
     const user = await db.User.findOne({ where: { email } });
-    return user ? dataComplete(user) : user;
+    return user;
   } catch (err) {
     logger.error(databaseError(err.errors));
     throw databaseError(err.errors);
@@ -56,7 +56,7 @@ exports.getAllUsers = async (size = 10, page = 0) => {
       limit: size,
       offset: page * size
     });
-    return pagination(response.count, listUsers(response.rows));
+    return pagination(response.count, response.rows);
   } catch (err) {
     logger.error(databaseError(err.errors));
     throw databaseError(err.errors);
@@ -78,7 +78,7 @@ exports.verifyCredentials = async credentials => {
   try {
     const userData = await this.getUserByEmail(credentials.email);
     if (userData) {
-      if (comparePassword(credentials.password, userData.user.password)) {
+      if (comparePassword(credentials.password, userData.password)) {
         return userData;
       }
       throw badRequest_Error('Wrong credentials');

@@ -13,25 +13,15 @@ exports.listUsers = data => ({
     id: user.id,
     name: user.name,
     last_name: user.lastName,
-    email: user.email
-  }))
-});
-
-exports.dataComplete = data => ({
-  user: {
-    id: data.id,
-    name: data.name,
-    last_name: data.lastName,
-    email: data.email,
-    password: data.password,
+    email: user.email,
     role: data.role
-  }
+  }))
 });
 
 exports.dataJWT = data => ({
   id: data.id,
   name: data.name,
-  last_name: data.last_name,
+  last_name: data.lastName,
   role: data.role
 });
 
