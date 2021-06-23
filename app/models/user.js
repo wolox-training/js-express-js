@@ -1,5 +1,7 @@
 'use strict';
 
+const { roles } = require('../constants');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -23,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING
       },
       role: {
-        type: DataTypes.INTEGER
+        type: DataTypes.ENUM,
+        values: Object.values(roles)
       },
       createdAt: {
         type: DataTypes.DATE,

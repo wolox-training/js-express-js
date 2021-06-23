@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-const { roleAdmin } = require('../../app/constants');
+const { roles } = require('../../app/constants');
 
 exports.userData = () => {
   const dummyUser = {
@@ -15,7 +15,7 @@ exports.userData = () => {
 exports.userAdminInitial = () => {
   const dummyUserAdmin = this.userData();
   dummyUserAdmin.email = 'user.admin@wolox.co';
-  dummyUserAdmin.role = roleAdmin;
+  dummyUserAdmin.role = roles.ADMIN;
   return dummyUserAdmin;
 };
 

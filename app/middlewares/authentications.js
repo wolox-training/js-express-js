@@ -3,7 +3,7 @@ const { unauthorizedError } = require('../errors');
 
 const { decodeToken } = require('../helpers/jwt');
 
-const { roleAdmin } = require('../constants');
+const { roles } = require('../constants');
 
 exports.verifyToken = (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ exports.verifyToken = (req, res, next) => {
 exports.roleAdmin = (req, res, next) => {
   try {
     const dataUser = req.headers.user;
-    if (!dataUser.role || dataUser.role > roleAdmin) throw unauthorizedError('Do not have privileges');
+    if (!dataUser.role || dataUser.role !== roles.ADMIN) throw unauthorizedError('Do not have privileges');
     next();
   } catch (err) {
     logger.error(err);
