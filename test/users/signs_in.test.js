@@ -30,7 +30,7 @@ describe('Users - Sign In', () => {
     }
   });
 
-  it('Response status 200 - Email from another Domain', async done => {
+  it('Response status 400 - Email from another Domain', async done => {
     try {
       const response = await supertest(app)
         .post('/users/sessions')
@@ -43,7 +43,7 @@ describe('Users - Sign In', () => {
     }
   });
 
-  it('Response status 200 - Wrong email', async done => {
+  it('Response status 400 - Wrong email', async done => {
     try {
       const response = await supertest(app)
         .post('/users/sessions')
@@ -56,7 +56,7 @@ describe('Users - Sign In', () => {
     }
   });
 
-  it('Response status 200 - Wrong password', async done => {
+  it('Response status 400 - Wrong password', async done => {
     try {
       const response = await supertest(app)
         .post('/users/sessions')

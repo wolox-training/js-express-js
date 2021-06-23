@@ -1,5 +1,7 @@
 const faker = require('faker');
 
+const { roles } = require('../../app/constants');
+
 exports.userData = () => {
   const dummyUser = {
     name: faker.name.findName(),
@@ -8,6 +10,13 @@ exports.userData = () => {
     password: 'Wolox2021'
   };
   return dummyUser;
+};
+
+exports.userAdminInitial = () => {
+  const dummyUserAdmin = this.userData();
+  dummyUserAdmin.email = 'user.admin@wolox.co';
+  dummyUserAdmin.role = roles.ADMIN;
+  return dummyUserAdmin;
 };
 
 exports.wrongPassword = () => {

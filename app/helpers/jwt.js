@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const { expiresIn } = require('../constants');
 const { dataJWT } = require('../serializers/users');
+const { dataJWTIn } = require('../mappers/users');
 
 const logger = require('../logger');
 const { defaultError, unauthorizedError } = require('../errors');
@@ -20,7 +21,7 @@ exports.createToken = data => {
 exports.decodeToken = token => {
   try {
     const decoded = jwt.verify(token, config.common.seedToken);
-    return dataJWT(decoded);
+    return dataJWTIn(decoded);
   } catch (err) {
     logger.error(err);
     throw unauthorizedError(err.message);
