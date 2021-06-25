@@ -12,10 +12,12 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: sequelize.UUIDV1
       },
       content: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        require: true
       },
       userId: {
         type: DataTypes.INTEGER,
+        require: true,
         references: {
           model: db.User,
           key: 'id'
