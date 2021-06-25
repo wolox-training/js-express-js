@@ -1,5 +1,18 @@
-exports.dataBasic = weet => ({
+exports.dataBasic = data => ({
   weet: {
-    content: weet.content
+    id: data.id,
+    content: data.content
   }
+});
+
+exports.listWeets = data => ({
+  weets: data.map(weet => ({
+    id: weet.id,
+    content: weet.content,
+    user: {
+      id: weet.user.id,
+      name: weet.user.name,
+      last_name: weet.user.lastName
+    }
+  }))
 });
