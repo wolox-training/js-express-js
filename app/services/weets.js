@@ -2,7 +2,8 @@ const axios = require('axios').default;
 
 const logger = require('../logger');
 const config = require('../../config');
-const { externalApiError } = require('../errors');
+const { externalApiError, databaseError } = require('../errors');
+const db = require('../models/index');
 
 exports.getRandomJoke = async () => {
   try {
@@ -11,8 +12,18 @@ exports.getRandomJoke = async () => {
       method: 'GET'
     });
     return response.data;
-  } catch (error) {
+  } catch (err) {
     logger.error('Error getting random joke');
     throw externalApiError('Error getting random joke');
+  }
+};
+
+exports.saveWeet = async data => {
+  try {
+    const newWeet = await db.Weet.create(data);
+    return newWeet;
+  } catch (err) {
+    logger.error(err);
+    throw databaseError(err);
   }
 };
