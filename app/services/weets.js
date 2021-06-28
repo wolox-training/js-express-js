@@ -3,7 +3,6 @@ const axios = require('axios').default;
 const logger = require('../logger');
 const config = require('../../config');
 const { externalApiError, databaseError } = require('../errors');
-
 const db = require('../models/index');
 
 exports.getRandomJoke = async () => {

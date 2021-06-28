@@ -1,4 +1,4 @@
-exports.dataBasic = weet => ({
+exports.weetBasicSerializer = weet => ({
   weet: {
     content: weet.content
   }
