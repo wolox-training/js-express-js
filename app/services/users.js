@@ -1,8 +1,6 @@
 const db = require('../models/index');
-
 const logger = require('../logger');
 const { databaseError, badRequest_Error } = require('../errors');
-
 const { pagination } = require('../serializers/utils');
 const { encryptar, comparePassword } = require('../helpers/utils');
 

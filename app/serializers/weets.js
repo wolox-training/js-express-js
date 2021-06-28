@@ -1,7 +1,7 @@
-exports.dataBasic = data => ({
+exports.weetBasicSerializer = weet => ({
   weet: {
-    id: data.id,
-    content: data.content
+    id: weet.id,
+    content: weet.content
   }
 });
 

@@ -12,16 +12,20 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: sequelize.UUIDV1
       },
       name: {
+        require: true,
         type: DataTypes.STRING
       },
       lastName: {
+        require: true,
         type: DataTypes.STRING,
         field: 'last_name'
       },
       email: {
+        require: true,
         type: DataTypes.STRING
       },
       password: {
+        require: true,
         type: DataTypes.STRING
       },
       role: {
