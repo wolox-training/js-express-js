@@ -1,4 +1,4 @@
-exports.dataBasic = data => ({
+exports.userBasicSerializer = data => ({
   user: {
     id: data.id,
     name: data.name,

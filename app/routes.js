@@ -9,6 +9,7 @@ const { verifyToken, roleAdmin } = require('./middlewares/authentications');
 
 const { healthCheck } = require('./controllers/healthCheck');
 const { createUser, signInUser, getUsers, createUserAdmin } = require('./controllers/users');
+const { createWeet } = require('./controllers/weets');
 
 exports.init = app => {
   app.get('/health', healthCheck);
@@ -16,6 +17,7 @@ exports.init = app => {
   app.post('/users', [schemaSignUp, validationSchema], createUser);
   app.post('/users/sessions', [schemaSignIn, validationSchemaSingIn], signInUser);
   app.post('/admin/users', [verifyToken, roleAdmin, schemaSignIn, validationSchemaSingIn], createUserAdmin);
+  app.post('/weets', [verifyToken], createWeet);
   // app.get('/endpoint/get/path', [], controller.methodGET);
   // app.put('/endpoint/put/path', [], controller.methodPUT);
   // app.post('/endpoint/post/path', [], controller.methodPOST);
