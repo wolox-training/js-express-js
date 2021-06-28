@@ -7,3 +7,17 @@ exports.roles = {
   REGULAR: 'REGULAR',
   ADMIN: 'ADMIN'
 };
+
+exports.scores = {
+  POSITIVE: '1',
+  NEGATIVE: '-1'
+};
+
+exports.positions = {
+  DEVELOPER: 'DEVELOPER',
+  LEAD: 'LEAD',
+  TL: 'TL',
+  EM: 'EM',
+  HEAD: 'HEAD',
+  CEO: 'CEO'
+};
