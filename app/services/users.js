@@ -25,6 +25,16 @@ exports.getUserByEmail = async email => {
   }
 };
 
+exports.getUserById = async id => {
+  try {
+    const user = await db.User.findOne({ where: { id } });
+    return user;
+  } catch (err) {
+    logger.error(databaseError(err.errors));
+    throw databaseError(err.errors);
+  }
+};
+
 exports.getAllUsers = async (size = 10, page = 0) => {
   try {
     const response = await db.User.findAndCountAll({
