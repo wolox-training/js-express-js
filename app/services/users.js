@@ -48,11 +48,12 @@ exports.getAllUsers = async (size = 10, page = 0) => {
   }
 };
 
-exports.updateUserByEmail = async (email, data) => {
+exports.updateUserByEmail = async (email, data, transaction) => {
   try {
     const dataUpdated = await db.User.update(data, {
       where: { email },
-      returning: true
+      returning: true,
+      transaction
     });
     return dataUpdated[1][0];
   } catch (err) {

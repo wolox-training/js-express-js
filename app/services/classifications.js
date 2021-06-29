@@ -44,9 +44,11 @@ exports.getScoreFromUser = async userId => {
   }
 };
 
-exports.saveClassification = async data => {
+exports.saveClassification = async (data, transaction) => {
   try {
-    const classification = await db.Classification.create(data);
+    const classification = await db.Classification.create(data, {
+      transaction
+    });
     return classification;
   } catch (err) {
     logger.error(databaseError(err.errors));
@@ -54,11 +56,12 @@ exports.saveClassification = async data => {
   }
 };
 
-exports.updateClassificationById = async (id, data) => {
+exports.updateClassificationById = async (id, data, transaction) => {
   try {
     const classificationUpdated = await db.Classification.update(data, {
       where: { id },
-      returning: true
+      returning: true,
+      transaction
     });
     return classificationUpdated[1][0];
   } catch (err) {
@@ -67,11 +70,12 @@ exports.updateClassificationById = async (id, data) => {
   }
 };
 
-exports.deleteClassificationById = async id => {
+exports.deleteClassificationById = async (id, transaction) => {
   try {
     await db.Classification.destroy({
       where: { id },
-      returning: true
+      returning: true,
+      transaction
     });
   } catch (err) {
     logger.error(databaseError(err.errors));
