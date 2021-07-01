@@ -1,6 +1,7 @@
 'use strict';
 
-const { roles } = require('../constants');
+const { getPosition } = require('../helpers/utils');
+const { roles, positions } = require('../constants');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -32,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM,
         values: Object.values(roles)
       },
+      position: {
+        type: DataTypes.ENUM,
+        values: Object.values(positions)
+      },
       createdAt: {
         type: DataTypes.DATE,
         field: 'created_at'
@@ -47,6 +52,11 @@ module.exports = (sequelize, DataTypes) => {
   );
   User.associate = models => {
     User.hasMany(models.Weet, { as: 'weets', foreignKey: 'user_id' });
+    User.hasMany(models.Classification, { as: 'classifications', foreignKey: 'rating_user_id' });
+  };
+  User.prototype.getPosition = score => {
+    const position = getPosition(score);
+    return position;
   };
   return User;
 };

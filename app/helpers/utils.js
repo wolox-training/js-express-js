@@ -4,6 +4,8 @@ const config = require('../../config');
 const logger = require('../logger');
 const { defaultError } = require('../errors');
 
+const { positions } = require('../constants');
+
 exports.encryptar = password => {
   try {
     const salt = bcrypt.genSaltSync(parseInt(config.common.roundsBcrypt));
@@ -22,4 +24,13 @@ exports.comparePassword = (password, hashPassword) => {
     logger.error(err);
     throw defaultError(err);
   }
+};
+
+exports.getPosition = score => {
+  if (score < 6) return positions.DEVELOPER;
+  else if (score < 10) return positions.LEAD;
+  else if (score < 20) return positions.TL;
+  else if (score < 30) return positions.EM;
+  else if (score < 50) return positions.HEAD;
+  return positions.CEO;
 };

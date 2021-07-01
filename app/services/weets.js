@@ -18,6 +18,19 @@ exports.getRandomJoke = async () => {
   }
 };
 
+exports.getWeetById = async id => {
+  try {
+    const weet = await db.Weet.findOne({
+      where: { id },
+      include: ['user']
+    });
+    return weet;
+  } catch (err) {
+    logger.error(err);
+    throw databaseError(err);
+  }
+};
+
 exports.saveWeet = async data => {
   try {
     const newWeet = await db.Weet.create(data);
