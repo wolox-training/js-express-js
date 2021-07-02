@@ -24,5 +24,3 @@ exports.dataJWT = data => ({
   last_name: data.lastName,
   role: data.role
 });
-
-exports.pagination = (count, rows) => ({ count, rows });
