@@ -9,11 +9,13 @@ const {
   getAllUsers,
   updateUserByEmail
 } = require('../services/users');
+const { sendEmailRegister } = require('../services/notifications');
 const { createToken } = require('../helpers/jwt');
 
 exports.createUser = async (req, res) => {
   try {
     const response = await saveUser(signUp(req.body));
+    await sendEmailRegister(response.name, response.lastName, response.email);
     res.status(200).send(userBasicSerializer(response));
   } catch (err) {
     logger.error(err);
@@ -33,6 +35,7 @@ exports.createUserAdmin = async (req, res) => {
     } else {
       dataNewUser.role = roles.ADMIN;
       response = await saveUser(dataNewUser);
+      await sendEmailRegister(response.name, response.lastName, response.email);
       logger.info('User created like Admin');
       res.status(200).send(userBasicSerializer(response));
     }

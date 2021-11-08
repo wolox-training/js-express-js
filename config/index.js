@@ -47,7 +47,14 @@ const config = {
     },
     apiGeekJoke: process.env.API_GEEK_JOKE,
     roundsBcrypt: process.env.ROUNDS_BCRYPT,
-    seedToken: process.env.SEED
+    seedToken: process.env.SEED,
+    stmp: {
+      clientID: process.env.SMTP_CLIENT_ID,
+      clientSecret: process.env.SMTP_CLIENT_SECRET,
+      redirectURI: process.env.SMTP_REDIRECT_URI,
+      refreshToken: process.env.SMTP_REFRESH_TOKEN,
+      user: process.env.SMTP_USER
+    }
   }
 };
 
